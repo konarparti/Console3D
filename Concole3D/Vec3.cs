@@ -70,6 +70,12 @@ namespace Console3D
             _y = vector.X;
             _z = vector.Y;
         }
+        public Vec3(Vec3 vector)
+        {
+            _x = vector.X;
+            _y = vector.Y;
+            _z = vector.Z;
+        }
         #endregion
 
         #region Operators

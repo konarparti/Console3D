@@ -14,7 +14,9 @@ namespace Console3D
         }
         public static double Sign(double a)
         {
-            return a < 0 ? -1 : 1;
+            if (a < 0) return -1;
+            else if(a > 0) return 1;
+            else return 0;
         }
         public static Vec3 Sign(Vec3 v)
         {
@@ -22,7 +24,7 @@ namespace Console3D
         }
         public static double Step(double edge, double x)
         {
-            return x > edge ? 0.0 : 1.0; // мб поменять местами
+            return x > edge ? 1.0 : 0.0; // мб поменять местами
         }
 
         public static Vec3 Step(Vec3 edge, Vec3 v)
@@ -58,7 +60,7 @@ namespace Console3D
 
         public static Vec3 RotateX(Vec3 a, double angle)
         {
-            Vec3 b = a;
+            Vec3 b = new Vec3(a);
             b.Z = a.Z * Math.Cos(angle) - a.Y * Math.Sin(angle);
             b.Y = a.Z * Math.Sin(angle) + a.Y * Math.Cos(angle);
             return b;
@@ -66,7 +68,7 @@ namespace Console3D
 
         public static Vec3 RotateY(Vec3 a, double angle)
         {
-            Vec3 b = a;
+            Vec3 b = new Vec3(a);
             b.X = a.X * Math.Cos(angle) - a.Z * Math.Sin(angle);
             b.Z = a.X * Math.Sin(angle) + a.Z * Math.Cos(angle);
             return b;
@@ -74,33 +76,33 @@ namespace Console3D
 
         public static Vec3 RotateZ(Vec3 a, double angle)
         {
-            Vec3 b = a;
+            Vec3 b = new Vec3(a);
             b.X = a.X * Math.Cos(angle) - a.Y * Math.Sin(angle);
             b.Y = a.X * Math.Sin(angle) + a.Y * Math.Cos(angle);
             return b;
         }
 
-        public static Vec2 Sphere(Vec3 ro, Vec3 rd, float r)
+        public static Vec2 Sphere(Vec3 ro, Vec3 rd, double r)
         {
             double b = Dot(ro, rd);
             double c = Dot(ro, ro) - r * r;
             double h = b * b - c;
-            if (h < 0.0) return new Vec2(-1.0);
+            if (h < 0) return new Vec2(-1);
             h = Math.Sqrt(h);
             return new Vec2(-b - h, -b + h);
         }
 
-        public static Vec2 Box(Vec3 ro, Vec3 rd, double boxSize, out Vec3? outNormal)
+        public static Vec2 Box(Vec3 ro, Vec3 rd, double boxSize, out Vec3 outNormal)
         {
-            outNormal = null;
-            Vec3 m = new Vec3(1.0) / rd;
+            outNormal = new(0);
+            Vec3 m = new Vec3(1) / rd;
             Vec3 n = m * ro;
-            Vec3 k = m * boxSize;
+            Vec3 k = Abs(m) * boxSize;
             Vec3 t1 = -n - k;
             Vec3 t2 = -n + k;
             double tN = Math.Max(Math.Max(t1.X, t1.Y), t1.Z);
             double tF = Math.Min(Math.Min(t2.X, t2.Y), t2.Z);
-            if (tN > tF || tF < 0.0) return new Vec2(-1.0);
+            if (tN > tF || tF < 0.0) return new Vec2(-1);
             Vec3 yzx = new Vec3(t1.Y, t1.Z, t1.X);
             Vec3 zxy = new Vec3(t1.Z, t1.X, t1.Y);
             outNormal = -Sign(rd) * Step(yzx, t1) * Step(zxy, t1);

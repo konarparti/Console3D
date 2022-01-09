@@ -58,7 +58,7 @@ namespace Console3D
         public static Vec2 operator -(Vec2 firstVector, Vec2 secondVector) => new Vec2(firstVector._x - secondVector._x, firstVector._y - secondVector._y);
         public static Vec2 operator -(Vec2 firstVector, double value) => new Vec2(firstVector._x - value, firstVector._y - value);
         public static Vec2 operator *(Vec2 firstVector, Vec2 secondVector) => new Vec2(firstVector._x * secondVector._x, firstVector._y * secondVector._y);
-        public static Vec2 operator *(Vec2 firstVector, double value) => new Vec2(firstVector._x *value, firstVector._y * value);
+        public static Vec2 operator *(Vec2 firstVector, double value) => new Vec2(firstVector._x * value, firstVector._y * value);
         public static Vec2 operator /(Vec2 firstVector, Vec2 secondVector) => new Vec2(firstVector._x / secondVector._x, firstVector._y / secondVector._y);
         public static Vec2 operator /(Vec2 firstVector, double value) => new Vec2(firstVector._x / value, firstVector._y / value);
         #endregion
